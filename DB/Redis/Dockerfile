@@ -1,4 +1,4 @@
-FROM redis:latest
+FROM redis
 
 COPY script.sh /
 
@@ -6,6 +6,6 @@ WORKDIR /
 
 RUN chmod +x script.sh
 
-RUN ls
+ENTRYPOINT [ "./script.sh" ]
 
 EXPOSE 6379 
