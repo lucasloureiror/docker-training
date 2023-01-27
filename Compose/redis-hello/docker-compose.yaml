@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  python-api:
+    build: .
+    ports:
+      - target: 80
+        published: 80
+    depends_on:
+      - redis
+    networks:
+      - default
+
+  python-api-down:
+    build:
+      context: .
+      dockerfile: Dockerfile-down
+    ports:
+      - target: 8000
+        published: 8000
+    depends_on:
+      - redis
+    networks:
+      - default
+
+  golang-api:
+      build:
+        context: ./go-api
+        dockerfile: Dockerfile
+      ports:
+        - target: 8080
+          published: 8080
+      depends_on:
+        - redis
+      networks:
+        - default
+
+  redis:
+    image: "redis:alpine"
+
+    volumes:
+        - ./redis-volume:/data
+    ports:
+      - 6379:6379
+    networks:
+      - default

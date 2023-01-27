@@ -1,0 +1,12 @@
+FROM python
+
+RUN pip install uvicorn[standard] && pip install fastapi && pip install redis
+
+WORKDIR /app
+
+COPY Down.py .
+
+EXPOSE 8000
+
+CMD uvicorn Down:app --reload --host 0.0.0.0 --port 8000
+
